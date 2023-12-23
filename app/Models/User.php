@@ -3,10 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Support\Str;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -16,6 +17,8 @@ class User extends Authenticatable
     const ADMIN = '1';
     const UNVERIFIED = '0';
     const REGULAR_USER ='0';
+
+    protected $table = 'users';
 
     /**
      * The attributes that are mass assignable.
@@ -64,6 +67,6 @@ class User extends Authenticatable
 
     public static function generateVerificationCode()
     {
-        return str_random(40);
+        return Str::random(40);
     }
 }
