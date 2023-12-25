@@ -9,8 +9,8 @@ trait HttpResponses
         return response()->json(["data" => $data, "code" => $code], $code);
     }
 
-    protected function error($data, $code)
+    protected function error($error, $code)
     {
-        return response()->json(["data" => $data, "code" => $code], $code);
+        return response()->json(["error" => $error, "code" => $code], $code);
     }
 }
