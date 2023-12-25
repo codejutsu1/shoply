@@ -2,47 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Seller;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
 
 class SellerController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $sellers = Seller::has('products')->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->success($sellers);
     }
-
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
-    }
+        $seller = Seller::has('products')->findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return $this->success($seller);
     }
 }

@@ -28,7 +28,7 @@ Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('products', ProductController::class);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('transactions', TransactionController::class);
-    Route::apiResource('buyers', BuyerController::class);
-    Route::apiResource('sellers', SellerController::class);
+    Route::apiResource('buyers', BuyerController::class)->only(['index', 'show']);
+    Route::apiResource('sellers', SellerController::class)->only(['index', 'show']);
     Route::apiResource('users', UserController::class);
 });

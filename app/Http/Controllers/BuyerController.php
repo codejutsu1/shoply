@@ -2,24 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Buyer;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
 
 class BuyerController extends Controller
 {
+    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $buyers = Buyer::has('transactions')->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->success($buyers);
     }
 
     /**
@@ -27,22 +24,8 @@ class BuyerController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        $buyer = Buyer::has('transactions')->findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return $this->success($buyer);
     }
 }
