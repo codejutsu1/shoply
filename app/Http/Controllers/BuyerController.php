@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Buyer;
 use Illuminate\Http\Request;
-use App\Traits\HttpResponses;
+use App\Http\Resources\BuyerResource;
+use App\Http\Resources\BuyerCollection;
 
 class BuyerController extends Controller
 {
-    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +16,7 @@ class BuyerController extends Controller
     {
         $buyers = Buyer::has('transactions')->get();
 
-        return $this->success($buyers);
+        return $this->success(new BuyerCollection($buyers));
     }
 
     /**
@@ -26,6 +26,6 @@ class BuyerController extends Controller
     {
         $buyer = Buyer::has('transactions')->findOrFail($id);
 
-        return $this->success($buyer);
+        return $this->success(new BuyerResource($buyer));
     }
 }

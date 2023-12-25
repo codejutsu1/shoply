@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Seller;
 use Illuminate\Http\Request;
-use App\Traits\HttpResponses;
+use App\Http\Resources\SellerResource;
+use App\Http\Resources\SellerCollection;
 
 class SellerController extends Controller
 {
-    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
@@ -16,7 +16,7 @@ class SellerController extends Controller
     {
         $sellers = Seller::has('products')->get();
 
-        return $this->success($sellers);
+        return $this->success(new SellerCollection($sellers));
     }
     /**
      * Display the specified resource.
@@ -25,6 +25,6 @@ class SellerController extends Controller
     {
         $seller = Seller::has('products')->findOrFail($id);
 
-        return $this->success($seller);
+        return $this->success(new SellerResource($seller));
     }
 }

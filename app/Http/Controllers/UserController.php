@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Traits\HttpResponses;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserCollection;
 use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
-    use HttpResponses;
     /**
      * Display a listing of the resource.
      */
@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return $this->success($users);
+        return $this->success(new UserCollection($users));
     }
 
     /**
@@ -35,7 +35,7 @@ class UserController extends Controller
             'admin' => User::REGULAR_USER,
         ]);
 
-        return $this->success($users, 201);
+        return $this->success(new UserResource($users), 201);
     }
 
     /**
@@ -43,7 +43,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $this->success($user);
+        return $this->success(new UserResource($user));
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return $this->success($user);
+        return $this->success(new UserResource($user));
     }
 
     /**

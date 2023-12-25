@@ -45,6 +45,21 @@ class User extends Authenticatable
         'verification_token'
     ];
 
+    protected function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => ucwords($value),
+            set: fn ($value) => strtolower($value),
+        );
+    }
+
+    protected function email(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => strtolower($value),
+        );
+    }
+
     /**
      * The attributes that should be cast.
      *
