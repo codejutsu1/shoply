@@ -62,7 +62,7 @@ class User extends Authenticatable
 
     public function isVerified()
     {
-        return $this->verified = self::VERIFIED;
+        return $this->verified == self::VERIFIED;
     }
 
     public static function generateVerificationCode()
