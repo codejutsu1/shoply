@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Http\Resources\TransactionResource;
+use App\Http\Resources\TransactionCollection;
 
 class TransactionController extends Controller
 {
@@ -12,15 +14,9 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $transactions = Transaction::all();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->success(new TransactionCollection($transactions));
     }
 
     /**
@@ -28,22 +24,6 @@ class TransactionController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Transaction $transaction)
-    {
-        //
+        return $this->success(new TransactionResource($transaction));
     }
 }

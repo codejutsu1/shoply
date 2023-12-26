@@ -25,7 +25,7 @@ use App\Http\Controllers\TransactionController;
 // });
 
 Route::group(['prefix' => 'v1'], function(){
-    Route::apiResource('products', ProductController::class);
+    Route::apiResource('products', ProductController::class)->only(['index', 'show']);
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('transactions', TransactionController::class);
     Route::apiResource('buyers', BuyerController::class)->only(['index', 'show']);

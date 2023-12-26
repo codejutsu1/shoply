@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\ProductCollection;
 
 class ProductController extends Controller
 {
@@ -12,15 +14,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $products = Product::all();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return $this->success(new ProductCollection($products));
     }
 
     /**
@@ -28,22 +24,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Product $product)
-    {
-        //
+        return $this->success(new ProductResource($product));
     }
 }
