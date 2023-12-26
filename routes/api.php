@@ -7,7 +7,9 @@ use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\Transaction\TransactionController;
+use App\Http\Controllers\Transaction\TransactionSellerController;
+use App\Http\Controllers\Transaction\TransactionCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +27,23 @@ use App\Http\Controllers\TransactionController;
 // });
 
 Route::group(['prefix' => 'v1'], function(){
+    //Products
     Route::apiResource('products', ProductController::class)->only(['index', 'show']);
+
+    //Categories
     Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('transactions', TransactionController::class);
+
+    //Transactions
+    Route::apiResource('transactions', TransactionController::class)->only(['index', 'show']);
+    Route::apiResource('transactions.categories', TransactionCategoryController::class)->only(['index']);
+    Route::apiResource('transactions.sellers', TransactionSellerController::class)->only(['index']);
+
+    //Buyers
     Route::apiResource('buyers', BuyerController::class)->only(['index', 'show']);
+
+    //Sellers
     Route::apiResource('sellers', SellerController::class)->only(['index', 'show']);
+
+    //Users
     Route::apiResource('users', UserController::class);
 });
