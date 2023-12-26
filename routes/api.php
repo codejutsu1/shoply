@@ -3,10 +3,14 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\BuyerController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Buyer\BuyerController;
+use App\Http\Controllers\Buyer\BuyerSellerController;
+use App\Http\Controllers\Buyer\BuyerProductController;
+use App\Http\Controllers\Buyer\BuyerCategoryController;
+use App\Http\Controllers\Buyer\BuyerTransactionController;
 use App\Http\Controllers\Transaction\TransactionController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
 use App\Http\Controllers\Transaction\TransactionCategoryController;
@@ -40,6 +44,10 @@ Route::group(['prefix' => 'v1'], function(){
 
     //Buyers
     Route::apiResource('buyers', BuyerController::class)->only(['index', 'show']);
+    Route::apiResource('buyers.transactions', BuyerTransactionController::class)->only(['index']);
+    Route::apiResource('buyers.products', BuyerProductController::class)->only(['index']);
+    Route::apiResource('buyers.sellers', BuyerSellerController::class)->only(['index']);
+    Route::apiResource('buyers.categories', BuyerCategoryController::class)->only(['index']);
 
     //Sellers
     Route::apiResource('sellers', SellerController::class)->only(['index', 'show']);
