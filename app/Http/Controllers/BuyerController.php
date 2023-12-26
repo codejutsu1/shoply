@@ -22,10 +22,8 @@ class BuyerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Buyer $buyer)
     {
-        $buyer = Buyer::has('transactions')->findOrFail($id);
-
         return $this->success(new BuyerResource($buyer));
     }
 }

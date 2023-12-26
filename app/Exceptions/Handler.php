@@ -30,15 +30,16 @@ class Handler extends ExceptionHandler
     {
         $this->renderable(function (NotFoundHttpException $e, Request $request) {
 
+            // dd($e->getMessage());
             if ($request->is('api/*')) {
-                return $this->error('The specified URL cannot be found.', 404);
+                return $this->error($e->getMessage(), $e->getStatusCode());
             }
         });
 
         $this->renderable(function (MethodNotAllowedHttpException $e, Request $request) {
 
             if ($request->is('api/*')) {
-                return $this->error('The specified method for this request is invalid.', 405);
+                return $this->error($e->getMessage(), $e->getStatusCode());
             }
         });
     }

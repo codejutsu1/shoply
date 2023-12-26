@@ -21,9 +21,9 @@ class SellerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Seller $seller)
     {
-        $seller = Seller::has('products')->findOrFail($id);
+        // $seller = Seller::has('products')->findOrFail($id);
 
         return $this->success(new SellerResource($seller));
     }
