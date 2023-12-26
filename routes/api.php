@@ -11,7 +11,11 @@ use App\Http\Controllers\Buyer\BuyerSellerController;
 use App\Http\Controllers\Buyer\BuyerProductController;
 use App\Http\Controllers\Buyer\BuyerCategoryController;
 use App\Http\Controllers\Buyer\BuyerTransactionController;
+use App\Http\Controllers\Category\CategoryBuyerController;
+use App\Http\Controllers\Category\CategorySellerController;
 use App\Http\Controllers\Transaction\TransactionController;
+use App\Http\Controllers\Category\CategoryProductController;
+use App\Http\Controllers\Category\CategoryTransactionController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
 use App\Http\Controllers\Transaction\TransactionCategoryController;
 
@@ -36,6 +40,10 @@ Route::group(['prefix' => 'v1'], function(){
 
     //Categories
     Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('categories.products', CategoryProductController::class)->only(['index']);
+    Route::apiResource('categories.sellers', CategorySellerController::class)->only(['index']);
+    Route::apiResource('categories.transactions', CategoryTransactionController::class)->only(['index']);
+    Route::apiResource('categories.buyers', CategoryBuyerController::class)->only(['index']);
 
     //Transactions
     Route::apiResource('transactions', TransactionController::class)->only(['index', 'show']);
