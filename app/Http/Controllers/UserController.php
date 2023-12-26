@@ -91,6 +91,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return response(null, 200);
+        return $this->success(new UserResource($user));
     }
 }
