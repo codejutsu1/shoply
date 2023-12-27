@@ -16,6 +16,10 @@ class Category extends Model
         'description'
     ];
 
+    protected $hidden = [
+        'pivot_table'
+    ];
+
     public function products()
     {
         return $this->belongsToMany(Product::class);

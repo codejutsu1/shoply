@@ -37,9 +37,13 @@ class DatabaseSeeder extends Seeder
         $transactionsQuantity = 1000;
 
         User::factory($usersQuantity)->create();
-        Category::factory($categoriesQuantity)
-                ->has(Product::factory($productsQuantity)->count(mt_rand(1, 5)))
-                ->create();
+
+        collect(range(1, $categoriesQuantity))
+                ->each(function() {
+                    Category::factory()
+                        ->has(Product::factory()->count(mt_rand(1, 5)))
+                        ->create();
+                });
 
         Transaction::factory($transactionsQuantity)->create();
 
