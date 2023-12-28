@@ -24,6 +24,7 @@ use App\Http\Controllers\Seller\SellerTransactionController;
 use App\Http\Controllers\Product\ProductTransactionController;
 use App\Http\Controllers\Category\CategoryTransactionController;
 use App\Http\Controllers\Transaction\TransactionSellerController;
+use App\Http\Controllers\Product\ProductBuyerTransactionController;
 use App\Http\Controllers\Transaction\TransactionCategoryController;
 
 /*
@@ -47,6 +48,7 @@ Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('products.transactions', ProductTransactionController::class)->only(['index']);
     Route::apiResource('products.buyers', ProductBuyerController::class)->only(['index']);
     Route::apiResource('products.categories', ProductCategoryController::class)->except(['store', 'show']);
+    Route::apiResource('products.buyers.transactions', ProductBuyerTransactionController::class)->only(['store']);
 
     //Categories
     Route::apiResource('categories', CategoryController::class);
