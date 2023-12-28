@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\ProductCollection;
 use App\Http\Requests\StoreSellerProductRequest;
 use App\Http\Requests\UpdateSellerProductRequest;
@@ -34,7 +35,7 @@ class SellerProductController extends Controller
         $validated = $request->validated();
 
         $validated['status'] = Product::UNAVAILABLE_PRODUCT;
-        $validated['image'] = '1.jpg';
+        $validated['image'] = $request->image->store();
         $validated['seller_id'] = $seller->id;
 
         $products = Product::create($validated);
@@ -47,6 +48,8 @@ class SellerProductController extends Controller
      */
     public function update(UpdateSellerProductRequest $request, Seller $seller, Product $product)
     {
+        $validated = $request->validated();
+
         $this->checkSeller($seller, $product);
         
         if($request->has('status'))
@@ -57,9 +60,13 @@ class SellerProductController extends Controller
             }
         }
 
-        // return response()->json($product->categories);
+        if($request->has('image')){
+            Storage::delete($product->image);
 
-        $product->update($request->validated());
+            $validated['image'] = $request->image->store();
+        }
+
+        $product->update($validated);
 
         return $this->success(new ProductResource($product));
     }
@@ -72,6 +79,8 @@ class SellerProductController extends Controller
         $this->checkSeller($seller, $product);
 
         $product->delete();
+
+        Storage::delete($product->image);
 
         return $this->success(new ProductResource($product));
     }
