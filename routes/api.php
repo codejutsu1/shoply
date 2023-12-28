@@ -11,6 +11,7 @@ use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Buyer\BuyerProductController;
 use App\Http\Controllers\Seller\SellerBuyerController;
 use App\Http\Controllers\Buyer\BuyerCategoryController;
+use App\Http\Controllers\Seller\SellerProductController;
 use App\Http\Controllers\Seller\SellerCategoryController;
 use App\Http\Controllers\Buyer\BuyerTransactionController;
 use App\Http\Controllers\Category\CategoryBuyerController;
@@ -65,6 +66,7 @@ Route::group(['prefix' => 'v1'], function(){
     Route::apiResource('sellers.transactions', SellerTransactionController::class)->only(['index']);
     Route::apiResource('sellers.categories', SellerCategoryController::class)->only(['index']);
     Route::apiResource('sellers.buyers', SellerBuyerController::class)->only(['index']);
+    Route::apiResource('sellers.products', SellerProductController::class)->except(['show']);
 
     //Users
     Route::apiResource('users', UserController::class);
