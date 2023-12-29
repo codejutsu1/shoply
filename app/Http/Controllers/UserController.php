@@ -112,7 +112,9 @@ class UserController extends Controller
     {
         if($user->isVerified()) return $this->error('This user is verified', 409);
 
-        Mail::to($user)->send(new UserCreated($user));
+        retry(5, function() use ($user) {
+            Mail::to($user)->send(new UserCreated($user));
+        }, 100);
 
         return $this->message('Verification link has been sent to ' . $user->email);
     }
