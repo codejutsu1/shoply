@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Mail\UserCreated;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Resources\UserCollection;
 use App\Http\Requests\StoreUserRequest;
 
@@ -104,5 +106,14 @@ class UserController extends Controller
         ]);
 
         return $this->message('The account has been verified successfully.');
+    }
+
+    public function resend(User $user)
+    {
+        if($user->isVerified()) return $this->error('This user is verified', 409);
+
+        Mail::to($user)->send(new UserCreated($user));
+
+        return $this->message('Verification link has been sent to ' . $user->email);
     }
 }
