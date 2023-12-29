@@ -78,4 +78,5 @@ Route::group(['prefix' => 'v1'], function(){
 
     //Users
     Route::apiResource('users', UserController::class);
+    Route::get('/user/verify/{token}', [UserController::class, 'verify'])->name('verify');
 });

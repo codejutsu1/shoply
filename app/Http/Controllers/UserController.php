@@ -93,4 +93,16 @@ class UserController extends Controller
 
         return $this->success(new UserResource($user));
     }
+
+    public function verify($token)
+    {
+        $user = User::where('verification_token', $token)->firstOrFail();
+
+        $user->update([
+            'verified' => User::VERIFIED,
+            'verification_token' => null
+        ]);
+
+        return $this->message('The account has been verified successfully.');
+    }
 }
