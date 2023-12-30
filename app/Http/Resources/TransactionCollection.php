@@ -16,4 +16,19 @@ class TransactionCollection extends ResourceCollection
     {
         return parent::toArray($request);
     }
+
+    public static function originalAttribute($index)
+    {
+        $attributes = [
+            'identifier' =>  'id',
+            'quantity' =>  'quantity',
+            'buyer' =>  'buyer_id',
+            'product' => 'product',
+            'creationDate' => 'created_at',
+            'lastChange' => 'updated_at',
+            'deletedDate' => 'deleted_at',
+        ];
+
+        return isset($attributes[$index]) ? $attributes[$index] : null;
+    }
 }

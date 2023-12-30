@@ -17,7 +17,7 @@ class BuyerResource extends JsonResource
         return [
             'identifier' => $this->id,
             'name' => $this->name,
-            'email' => $this->name,
+            'email' => $this->email,
             'isVerified' => (int) $this->verified,
             'creationDate' => $this->created_at,
             'lastChange' => $this->updated_at,

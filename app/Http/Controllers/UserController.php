@@ -118,4 +118,9 @@ class UserController extends Controller
 
         return $this->message('Verification link has been sent to ' . $user->email);
     }
+
+    // protected function sortBy($collection)
+    // {
+    //     return $this->sortData($collection);
+    // }
 }
