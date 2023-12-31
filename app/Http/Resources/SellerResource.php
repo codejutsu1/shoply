@@ -22,6 +22,31 @@ class SellerResource extends JsonResource
             'creationDate' => $this->created_at,
             'lastChange' => $this->updated_at,
             'deletedDate' => isset($this->deleted_at) ? $this->deleted_at : null,
+
+            [
+                'rel' => 'self',
+                'href' => route('sellers.show', $this->id),
+            ],
+            [
+                'rel' => 'seller.categories',
+                'href' => route('sellers.categories.index', $this->id)
+            ],
+            [
+                'rel' => 'seller.products',
+                'href' => route('sellers.products.index', $this->id)
+            ],
+            [
+                'rel' => 'seller.buyers',
+                'href' => route('sellers.buyers.index', $this->id)
+            ],
+            [
+                'rel' => 'seller.transactions',
+                'href' => route('sellers.transactions.index', $this->id)
+            ],
+            [
+                'rel' => 'seller.profile',
+                'href' => route('users.show', $this->id)
+            ],
         ];
     }
 }
