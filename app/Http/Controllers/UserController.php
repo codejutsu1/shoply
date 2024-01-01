@@ -16,6 +16,14 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('transform.input:' . UserCollection::class)->only(['store', 'update']);
+    }
+
     public function index()
     {
         $users = User::all();

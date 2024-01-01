@@ -16,6 +16,12 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SellerProductController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('transform.input:' . ProductCollection::class)->only(['store', 'update']);
+    }
     /**
      * Display a listing of the resource.
      */

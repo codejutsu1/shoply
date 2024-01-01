@@ -9,10 +9,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TransactionResource;
+use App\Http\Resources\TransactionCollection;
 use App\Http\Requests\StoreProductBuyerTransactionRequest;
 
 class ProductBuyerTransactionController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->middleware('transform.input:' . TransactionCollection::class)->only(['store']);
+    }
     /**
      * Store a newly created resource in storage.
      */
