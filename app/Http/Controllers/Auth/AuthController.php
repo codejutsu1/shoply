@@ -41,4 +41,11 @@ class AuthController extends Controller
         return $this->success([new UserResource($user), 'token' => $token], 200);
 
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return $this->success('Successfully logged out.');
+    }
 }
