@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Seller\SellerController;
 use App\Http\Controllers\Product\ProductController;
@@ -94,4 +95,8 @@ Route::group(['prefix' => 'v1'], function(){
 
     //User
     Route::get('/user/{user}/resend', [UserController::class, 'resend'])->name('resend');
+
+
+    //Authentication 
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
 });

@@ -19,8 +19,6 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:sanctum', ['except' => ['store', 'resend']]);
-
         $this->middleware('transform.input:' . UserCollection::class)->only(['store', 'update']);
     }
 
@@ -36,7 +34,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $users = User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
@@ -45,7 +43,7 @@ class UserController extends Controller
             'admin' => User::REGULAR_USER,
         ]);
 
-        return $this->success(new UserResource($users), 201);
+        return $this->success(new UserResource($user), 201);
     }
 
     /**
