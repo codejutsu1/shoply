@@ -11,10 +11,6 @@ use App\Http\Resources\CategoryCollection;
 
 class ProductCategoryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum', ['only' => ['index']]);
-    }
     /**
      * Display a listing of the resource.
      */

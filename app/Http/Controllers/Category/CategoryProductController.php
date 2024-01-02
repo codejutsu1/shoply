@@ -9,11 +9,6 @@ use App\Http\Resources\ProductCollection;
 
 class CategoryProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum', ['only' => ['index']]);
-    }
-
     public function index(Category $category)
     {
         $products = $category->products;

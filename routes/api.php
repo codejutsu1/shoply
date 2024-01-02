@@ -43,41 +43,55 @@ use App\Http\Controllers\Transaction\TransactionCategoryController;
 // });
 
 Route::group(['prefix' => 'v1'], function(){
-    //Products
+
+    //Middleware
+
+    Route::group(['middleware' => 'auth:sanctum'], function() {
+        //Products
+        Route::apiResource('products', ProductController::class)->except(['index', 'show']);
+        Route::apiResource('products.transactions', ProductTransactionController::class)->only(['index']);
+        Route::apiResource('products.buyers', ProductBuyerController::class)->only(['index']);
+        Route::apiResource('products.categories', ProductCategoryController::class)->except(['index', 'store', 'show']);
+        Route::apiResource('products.buyers.transactions', ProductBuyerTransactionController::class)->only(['store']);
+
+        //Categories
+        Route::apiResource('categories', CategoryController::class)->except(['index', 'show']);
+        Route::apiResource('categories.sellers', CategorySellerController::class)->only(['index']);
+        Route::apiResource('categories.transactions', CategoryTransactionController::class)->only(['index']);
+        Route::apiResource('categories.buyers', CategoryBuyerController::class)->only(['index']);
+
+        //Transactions
+        Route::apiResource('transactions', TransactionController::class)->only(['index', 'show']);
+        Route::apiResource('transactions.categories', TransactionCategoryController::class)->only(['index']);
+        Route::apiResource('transactions.sellers', TransactionSellerController::class)->only(['index']);
+
+        //Buyers
+        Route::apiResource('buyers', BuyerController::class)->only(['index', 'show']);
+        Route::apiResource('buyers.transactions', BuyerTransactionController::class)->only(['index']);
+        Route::apiResource('buyers.products', BuyerProductController::class)->only(['index']);
+        Route::apiResource('buyers.sellers', BuyerSellerController::class)->only(['index']);
+        Route::apiResource('buyers.categories', BuyerCategoryController::class)->only(['index']);
+
+        //Sellers
+        Route::apiResource('sellers', SellerController::class)->only(['index', 'show']);
+        Route::apiResource('sellers.transactions', SellerTransactionController::class)->only(['index']);
+        Route::apiResource('sellers.categories', SellerCategoryController::class)->only(['index']);
+        Route::apiResource('sellers.buyers', SellerBuyerController::class)->only(['index']);
+        Route::apiResource('sellers.products', SellerProductController::class)->except(['show']);
+
+        //Users
+        Route::apiResource('users', UserController::class);
+        Route::get('/user/verify/{token}', [UserController::class, 'verify'])->name('verify');
+    });
+    
+    //Product
     Route::apiResource('products', ProductController::class)->only(['index', 'show']);
-    Route::apiResource('products.transactions', ProductTransactionController::class)->only(['index']);
-    Route::apiResource('products.buyers', ProductBuyerController::class)->only(['index']);
-    Route::apiResource('products.categories', ProductCategoryController::class)->except(['store', 'show']);
-    Route::apiResource('products.buyers.transactions', ProductBuyerTransactionController::class)->only(['store']);
-
-    //Categories
-    Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('products.categories', ProductCategoryController::class)->only(['index']);
+    
+    //Category
+    Route::apiResource('categories', CategoryController::class)->only(['index', 'show']);
     Route::apiResource('categories.products', CategoryProductController::class)->only(['index']);
-    Route::apiResource('categories.sellers', CategorySellerController::class)->only(['index']);
-    Route::apiResource('categories.transactions', CategoryTransactionController::class)->only(['index']);
-    Route::apiResource('categories.buyers', CategoryBuyerController::class)->only(['index']);
 
-    //Transactions
-    Route::apiResource('transactions', TransactionController::class)->only(['index', 'show']);
-    Route::apiResource('transactions.categories', TransactionCategoryController::class)->only(['index']);
-    Route::apiResource('transactions.sellers', TransactionSellerController::class)->only(['index']);
-
-    //Buyers
-    Route::apiResource('buyers', BuyerController::class)->only(['index', 'show']);
-    Route::apiResource('buyers.transactions', BuyerTransactionController::class)->only(['index']);
-    Route::apiResource('buyers.products', BuyerProductController::class)->only(['index']);
-    Route::apiResource('buyers.sellers', BuyerSellerController::class)->only(['index']);
-    Route::apiResource('buyers.categories', BuyerCategoryController::class)->only(['index']);
-
-    //Sellers
-    Route::apiResource('sellers', SellerController::class)->only(['index', 'show']);
-    Route::apiResource('sellers.transactions', SellerTransactionController::class)->only(['index']);
-    Route::apiResource('sellers.categories', SellerCategoryController::class)->only(['index']);
-    Route::apiResource('sellers.buyers', SellerBuyerController::class)->only(['index']);
-    Route::apiResource('sellers.products', SellerProductController::class)->except(['show']);
-
-    //Users
-    Route::apiResource('users', UserController::class);
-    Route::get('/user/verify/{token}', [UserController::class, 'verify'])->name('verify');
+    //User
     Route::get('/user/{user}/resend', [UserController::class, 'resend'])->name('resend');
 });

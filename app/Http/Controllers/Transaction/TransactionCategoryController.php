@@ -9,11 +9,6 @@ use App\Http\Resources\CategoryCollection;
 
 class TransactionCategoryController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:sanctum', ['only' => ['index']]);
-    }
-    
     public function index(Transaction $transaction)
     {
         $categories = $transaction->product->categories;
