@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        parent::__construct();
+        $this->middleware('auth:sanctum', ['only' => ['store', 'resend']]);
 
         $this->middleware('transform.input:' . UserCollection::class)->only(['store', 'update']);
     }

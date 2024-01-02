@@ -13,7 +13,7 @@ class CategoryController extends Controller
 {
     public function __construct()
     {
-        parent::__construct();
+        $this->middleware('auth:sanctum', ['only' => ['index', 'show']]);
 
         $this->middleware('transform.input:' . CategoryCollection::class)->only(['store', 'update']);
     }
